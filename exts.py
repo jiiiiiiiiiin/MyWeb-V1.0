@@ -5,11 +5,14 @@ import pymysql  # python3.x 没有mysqldb  需要先导入pymysql 在安装mysql
 from flask_sqlalchemy import SQLAlchemy
 
 
-def generate_ret(status, data=None, to_str=True):
+def generate_ret(status, extra=None, data=None, to_str=True):
     ret = {
         'status': status,
         'data': data
     }
+
+    if extra:
+        ret.update(extra)
     if to_str:
         return json.dumps(ret)
     else:
@@ -24,6 +27,12 @@ def generate_psd(password):
     sha1.update(password.encode("utf-8"))
     ret = sha1.hexdigest()
     return ret
+
+
+class UserAttribute:
+    Authority_Root = 0
+    Authority_User = 1
+    Authority_Visitor = 2
 
 
 pymysql.install_as_MySQLdb()

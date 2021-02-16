@@ -25,7 +25,7 @@
 
         <li class="layui-nav-item" id="nav-user" style="float: right;">
             {% if user_info %}
-                <a href="/user"><img src="{{ url_for('static',filename=user_info.headPhoto) }}"
+                <a href="/user"><img src="{{ url_for('static',filename="img/headPhoto/tx.jpg") }}"
                                      class="layui-nav-img">{{ user_info.username }}</a>
                 <dl class="layui-nav-child">
                     <dd><a href="/user">个人中心</a></dd>
