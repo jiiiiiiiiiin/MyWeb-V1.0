@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}登陆{% endblock %}
+
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+    <div class="side-body">
+        <div class="layui-row layui-col-space20">
+            <div class="layui-col-md4">&nbsp;</div>
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md4">
+                <div class="layui-card">
+                    <div class="layui-card-header" style="text-align: center;padding: 10px;"><h3>登陆</h3></div>
+                    <div class="layui-card-body" style="padding: 10px;">
+                        <form class="layui-form layui-form-pane" action="">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">账号</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="username" autocomplete="off" placeholder="请输入账号"
+                                           class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">密码</label>
+                                <div class="layui-input-block">
+                                    <input type="password" name="password" autocomplete="off" placeholder="请输入密码"
+                                           class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item" pane="">
+                                <label class="layui-form-label">记住</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" checked="" name="remember" lay-skin="switch"
+                                           lay-filter="switchTest">
+                                </div>
+                            </div>
+                            <div class="layui-form-item" style="text-align: center">
+                                <button class="layui-btn" lay-submit lay-filter="formDemo">登陆</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.getElementById('nav-user').className += ' layui-this';
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+
+        layui.use('form', function () {
+            var form = layui.form, $ = layui.jquery;
+
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                if (data.field.username.trim() === "") {
+                    layer.msg("请输入账号");
+                    return false;
+                }
+                if (data.field.password.trim() === "") {
+                    layer.msg("请输入密码");
+                    return false;
+                }
+                post({"type": "login", "data": data.field}, '/user/login', true, true);
+                return false;
+            });
+            form.render();//重点在这里
+        });
+    </script>
+{% endblock %}

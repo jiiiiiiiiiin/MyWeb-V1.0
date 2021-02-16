@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}主页{% endblock %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block body %}
+<div class="side-body">
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.getElementById('nav-index').className += ' layui-this';
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+    </script>
+{% endblock %}

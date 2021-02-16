@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>{% block title %}{% endblock %} - {{ webConfig.Name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename="layui/css/layui.css") }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename="css/base.css") }}">
+    <script type="text/javascript" src="{{ url_for('static',filename="layui/layui.js") }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename="js/order.js") }}"></script>
+    {% block head %}
+
+    {% endblock %}
+</head>
+<body class="body-background">
+<div class="layui-header ">
+    <ul class="layui-nav {{ ui }}" id="nav-top">
+        {% for li in webConfig.NAV %}
+            <li class="layui-nav-item" id="{{ li.id }}">
+                <a href="{{ li.url }}">{{ li.title }}</a>
+            </li>
+        {% endfor %}
+
+        <li class="layui-nav-item" id="nav-user" style="float: right;">
+            {% if user_info %}
+                <a href="/user"><img src="{{ url_for('static',filename=user_info.headPhoto) }}"
+                                     class="layui-nav-img">{{ user_info.username }}</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="/user">个人中心</a></dd>
+                    <dd><a onclick="post({'type': 'logout'}, '/user/login', true, true);">退出</a></dd>
+                </dl>
+            {% else %}
+                <a href="/user/login">登录</a>
+            {% endif %}
+
+        </li>
+    </ul>
+</div>
+
+{% block nav %}
+
+{% endblock %}
+
+
+{% block body %}
+
+{% endblock %}
+
+<div class="layui-row footer">
+    <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <p><a>{{ webConfig.ICP }}</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+
+{% endblock %}
+
+</body>
+</html>

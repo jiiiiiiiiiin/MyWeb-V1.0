@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}个人中心{% endblock %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block nav %}
+    <div class="layui-side layui-bg-black side-nav">
+        <ul class="layui-nav layui-nav-tree layui-nav-side side-nav" lay-filter="nav-user" lay-shrink="all">
+            <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
+
+            {% if user_info.authority == 0 %}
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a>系统设置</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block body %}
+<div class="layui-body side-body">
+    <blockquote class="layui-elem-quote layui-quote-nm">
+        当前用户权限：<span class="layui-badge">{{ user_info.authority }}</span>
+    </blockquote>
+
+    <div class="layui-tab layui-tab-card">
+        <ul class="layui-tab-title">
+            <li class="layui-this">网站设置</li>
+            <li>用户管理</li>
+            <li>权限分配</li>
+            <li>应用管理</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">1</div>
+            <div class="layui-tab-item">2</div>
+            <div class="layui-tab-item">3</div>
+            <div class="layui-tab-item">4</div>
+            <div class="layui-tab-item">5</div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        document.getElementById('nav-user').className += ' layui-this';
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+    </script>
+{% endblock %}
