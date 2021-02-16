@@ -13,10 +13,10 @@ app = Flask(__name__)
 app.config.from_object(config)
 app.register_blueprint(user_blue, url_prefix='/user')
 app.register_blueprint(app_blue, url_prefix='/app')
-# app.add_url_rule(rule='/robot/',  # WeRoBot 挂载地址
-#                  endpoint='werobot',  # Flask 的 endpoint
-#                  view_func=make_view(myrobot),
-#                  methods=['GET', 'POST'])
+app.add_url_rule(rule='/robot',  # WeRoBot 挂载地址
+                 endpoint='werobot',  # Flask 的 endpoint
+                 view_func=make_view(myrobot),
+                 methods=['GET', 'POST'])
 
 db.init_app(app)
 
@@ -25,7 +25,6 @@ db.init_app(app)
 @app.route('/index/')
 def index():
     # 主页
-    print(app.url_map)
     return render_template("index.html")
 
 
