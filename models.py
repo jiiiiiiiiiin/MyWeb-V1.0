@@ -12,7 +12,7 @@ class User(db.Model):
     createTime = db.Column(db.DateTime, default=datetime.now)
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<user %r>' % self.username
 
 
 class Apps(db.Model):
