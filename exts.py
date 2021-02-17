@@ -5,7 +5,7 @@ import pymysql  # python3.x 没有mysqldb  需要先导入pymysql 在安装mysql
 from flask_sqlalchemy import SQLAlchemy
 
 
-def generate_ret(status, extra=None, data=None, to_str=True):
+def generate_ret(status, data=None, to_str=True, extra=None):
     ret = {
         'status': status,
         'data': data
