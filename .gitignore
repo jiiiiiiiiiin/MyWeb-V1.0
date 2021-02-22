@@ -1,2 +1,5 @@
 /migrations/
 /config.py
+/blue_app/app_library/
+/blue_app/view_library.py
+/templates/App/library
