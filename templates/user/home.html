@@ -9,21 +9,21 @@
 
 
 {% block nav %}
-    <div class="layui-side layui-bg-black side-nav">
-        <ul class="layui-nav layui-nav-tree layui-nav-side side-nav" lay-filter="nav-user" lay-shrink="all">
-            <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
-
-            {% if user_info.authority == 0 %}
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a>系统设置</a>
-                </li>
-            {% endif %}
-        </ul>
-    </div>
+{#    <div class="layui-side layui-bg-black side-nav">#}
+{#        <ul class="layui-nav layui-nav-tree layui-nav-side side-nav" lay-filter="nav-user" lay-shrink="all">#}
+{#            <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->#}
+{##}
+{#            {% if user_info.authority == user_attribute.root %}#}
+{#                <li class="layui-nav-item layui-nav-itemed">#}
+{#                    <a>系统设置</a>#}
+{#                </li>#}
+{#            {% endif %}#}
+{#        </ul>#}
+{#    </div>#}
 {% endblock %}
 
 {% block body %}
-    <div class="layui-body side-body">
+    <div class="side-body">{# layui-body #}
         <blockquote class="layui-elem-quote layui-quote-nm">
             当前用户权限：<span class="layui-badge">{{ user_info.authority }}</span>
         </blockquote>
@@ -51,10 +51,12 @@
                 <div class="layui-tab-item layui-show">
                     {% if Apps %}
                         {% for app in Apps %}
-                            <blockquote class="layui-elem-quote">
-                                {{ app.app_name }}
-                                <a href="{{ url_for("app." + app.app_id) }}" class="layui-btn">跳转</a>
-                            </blockquote>
+                            {% if user_info.authority <= app.app_authority %}
+                                <blockquote class="layui-elem-quote">
+                                    {{ app.app_name }}
+                                    <a href="{{ url_for("app." + app.app_id) }}" class="layui-btn">跳转</a>
+                                </blockquote>
+                            {% endif %}
                         {% endfor %}
                     {% endif %}
                 </div>

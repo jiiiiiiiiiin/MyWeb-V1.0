@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}主页{% endblock %}
+{% block title %}Blog{% endblock %}
 
 
 {% block head %}
@@ -9,7 +9,9 @@
 
 
 {% block body %}
-
+    {#<div class="side-body">#}
+    {#</div>#}
+    <iframe src="{{ url_for("app.md") }}" width="90%" height="800px" name="md" scrolling="auto" style="border: medium none"></iframe>
 {% endblock %}
 
 {% block scripts %}
@@ -18,5 +20,6 @@
         layui.use('element', function () {
             var element = layui.element;
         });
+
     </script>
 {% endblock %}

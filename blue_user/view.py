@@ -70,6 +70,7 @@ def login():
                     session.permanent = False
                 session['user_status'] = 1
                 session["user_info"] = {
+                    "userid" :query_user.id,
                     "username": query_user.username,
                     "authority": query_user.authority,
                     "headPhoto": query_user.headPhoto

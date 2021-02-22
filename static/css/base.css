@@ -24,7 +24,8 @@
 }
 
 .body-background {
-    background-color: white;
+    background-color: #f2f2f2;
+    height: 100%;
 }
 
 .side-nav {
@@ -34,8 +35,12 @@
 
 
 .side-body {
-    padding: 20px;
+    background-color: white;
+    padding: 10px;
     margin-bottom: 50px;
     top: 60px;
+}
 
+.card {
+    padding: 10px;
 }
