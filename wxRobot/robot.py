@@ -19,7 +19,7 @@ client.create_menu({
 
 @myrobot.text
 def text(message):
-    return "回音墙：{}".format(message.content)
+    return "{}".format(message.content)
 
 
 @myrobot.subscribe

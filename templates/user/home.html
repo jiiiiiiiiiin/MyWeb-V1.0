@@ -36,9 +36,9 @@
                 <li class="layui-this">应用管理</li>
             </ul>
             <div class="layui-tab-content" style="height: 500px;">
-                <div class="layui-tab-item">1</div>
+                <div class="layui-tab-item">{{ user_info.authority }} {{ user_attribute.root }}</div>
                 <div class="layui-tab-item">
-                    {% if user_info.authority == user_attribute.root %}
+                    {% if user_info.authority == user_attribute.Authority_Root %}
                         <div>
                             <blockquote class="layui-elem-quote" style="background-color: white;">用户信息</blockquote>
                             <table class="layui-hide" id="user" style="background-color: white;"></table>
@@ -73,7 +73,7 @@
         layui.use('element', function () {
             var element = layui.element;
         });
-        {% if user_info.authority == user_attribute.root %}
+        {% if user_info.authority == user_attribute.Authority_Root %}
             layui.use('table', function () {
                 var table = layui.table;
 

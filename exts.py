@@ -4,6 +4,7 @@ import requests
 import pymysql  # python3.x 没有mysqldb  需要先导入pymysql 在安装mysqldb驱动
 from flask_sqlalchemy import SQLAlchemy
 from flask_apscheduler import APScheduler
+from apscheduler import events
 
 
 def generate_ret(status, data=None, to_str=True, extra=None):
@@ -36,6 +37,10 @@ def bark_msg(url, title, content, time_out=1):
     requests.get("{url}{title}/{content}".format(url=url, title=title, content=content))
 
 
+def bark_root(content):
+    bark_msg("https://api.day.app/DCvStwpdZ6nDfL5Bp4HDzi/", "Server", content)
+
+
 class UserAttribute:
     Authority_Root = 0
     Authority_User = 1
@@ -45,5 +50,12 @@ class UserAttribute:
 pymysql.install_as_MySQLdb()
 db = SQLAlchemy()
 
-
 scheduler = APScheduler()
+
+
+def ttt(content):
+    bark_root("job error or missed.please check the server.")
+
+
+scheduler.add_listener(ttt, mask=(events.EVENT_JOB_ERROR | events.EVENT_JOB_MISSED))
+
