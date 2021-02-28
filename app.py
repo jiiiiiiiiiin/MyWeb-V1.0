@@ -53,7 +53,7 @@ with app.app_context():
     app.logger.info(app_scheduler_func)
 
 
-if os.environ.get('WERKZEUG_RUN_MAIN') == 'true' or 1:  # 解决FLASK DEBUG模式定时任务执行两次
+if os.environ.get('WERKZEUG_RUN_MAIN') == 'true' or os.path.exists("server.env"):  # 解决FLASK DEBUG模式定时任务执行两次
     scheduler.init_app(app)
     scheduler.start()
     bark_root("apscheduler start ok.")
