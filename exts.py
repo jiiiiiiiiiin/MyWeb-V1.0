@@ -53,9 +53,10 @@ db = SQLAlchemy()
 scheduler = APScheduler()
 
 
-def ttt(content):
-    bark_root("job error or missed.please check the server.")
+def event_handle(e):
+    job = scheduler.get_job(e.job_id)
+    bark_root("event_handle error/missed/max")
 
 
-scheduler.add_listener(ttt, mask=(events.EVENT_JOB_ERROR | events.EVENT_JOB_MISSED))
+scheduler.add_listener(event_handle, mask=(events.EVENT_JOB_ERROR | events.EVENT_JOB_MISSED | events.EVENT_JOB_MAX_INSTANCES))
 

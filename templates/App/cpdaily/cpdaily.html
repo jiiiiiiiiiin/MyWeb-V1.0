@@ -1,0 +1,63 @@
+{% extends 'index.html' %}
+{% block title %}今日校园{% endblock %}
+{% block app %}
+    <div class="layui-row layui-col-space20">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">今日校园</div>
+                <div class="layui-card-body">
+                    <blockquote class="layui-elem-quote">
+                        <p>内部使用，请勿分享</p>
+                        <p class="layui-bg-red">使用说明：在下方填入所需信息提交即可。</p>
+                    </blockquote>
+                    <form class="layui-form" action="">
+                        <div class="layui-form-item">
+                            <input type="text" name="username" required lay-verify="required" placeholder="请输入学号"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-item">
+                            <input type="password" name="password" required lay-verify="required"
+                                   placeholder="请输入信息门户密码"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
+
+
+        layui.use('form', function () {
+            var form = layui.form;
+
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                if (data.field.username.trim() === "") {
+                    layer.msg("请输入账号");
+                    return false;
+                }
+                if (data.field.password.trim() === "") {
+                    layer.msg("请输入密码");
+                    return false;
+                }
+                layer.msg("请稍等，系统验证密码中...");
+                post({"type": "commit", "data": data.field}, {{ url_for("app.cookie_commit") }}, true, true);
+                document.getElementsByName("password")[0].value = ""; // 瞎jb写 反正老子不是前端
+                return false;
+            });
+            form.render();//重点在这里
+        });
+    </script>
+{% endblock %}
