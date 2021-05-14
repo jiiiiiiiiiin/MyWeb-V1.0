@@ -1,32 +1,33 @@
 {% extends 'base.html' %}
-
-{% block title %}CpDaily{% endblock %}
-
-
+{% block title %}网易云{% endblock %}
 {% block head %}
 
 {% endblock %}
-
 {% block body %}
     <div class="side-body" style="background-color: #f2f2f2">
         <div class="layui-row layui-col-space20">
             <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
                 <div class="layui-card">
-                    <div class="layui-card-header">今日校园</div>
+                    <div class="layui-card-header">网易云 - 今日推荐保存</div>
                     <div class="layui-card-body">
                         <blockquote class="layui-elem-quote">
                             <p>内部使用，请勿分享</p>
-                            <p class="layui-bg-red">使用说明：在下方填入信息门户账号密码提交即可。</p>
+                            <p class="layui-bg-red">使用说明：在下方填入手机、密码提交即可。</p>
                         </blockquote>
                         <form class="layui-form" action="">
                             <div class="layui-form-item">
-                                <input type="text" name="username" required lay-verify="required" placeholder="请输入学号"
-                                       autocomplete="off" class="layui-input">
+                                <input type="text" name="username" required lay-verify="required" placeholder="请输入手机号"
+                                       autocomplete="off" class="layui-input" {% if user %}disabled{% endif %}>
                             </div>
                             <div class="layui-form-item">
                                 <input type="password" name="password" required lay-verify="required"
-                                       placeholder="请输入信息门户密码"
-                                       autocomplete="off" class="layui-input">
+                                       placeholder="请输入密码"
+                                       autocomplete="off" class="layui-input" {% if user %}disabled{% endif %}>
+                            </div>
+                            <div class="layui-form-item">
+                                <input type="text" name="bark" required lay-verify="required"
+                                       placeholder="bark"
+                                       autocomplete="off" class="layui-input" {% if user %}disabled{% endif %}>
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
@@ -44,7 +45,8 @@
 {% block scripts %}
     <script>
         {% if user %}
-            document.getElementsByName("username")[0].value = "{{ user.username }}";
+            document.getElementsByName("username")[0].value = "{{ user.phone }}";
+            document.getElementsByName("bark")[0].value = "{{ user.bark }}";
             document.getElementsByName("password")[0].value = "***********";
         {% endif %}
 
@@ -54,7 +56,7 @@
             //监听提交
             form.on('submit(formDemo)', function (data) {
                 if (data.field.username.trim() === "") {
-                    layer.msg("请输入账号");
+                    layer.msg("请输入手机号");
                     return false;
                 }
                 if (data.field.password.trim() === "") {
@@ -62,7 +64,7 @@
                     return false;
                 }
                 layer.msg("请稍等，系统验证密码中...");
-                post({"type": "commit", "data": data.field}, "{{ url_for("app.cpdaily_commit") }}", true, true);
+                post({"type": "commit", "data": data.field}, "{{ url_for("app.ncm_login") }}", true, true);
                 document.getElementsByName("password")[0].value = ""; // 瞎jb写 反正老子不是前端
                 return false;
             });

@@ -5,7 +5,7 @@ import pymysql  # python3.x 没有mysqldb  需要先导入pymysql 在安装mysql
 from flask_sqlalchemy import SQLAlchemy
 from flask_apscheduler import APScheduler
 from apscheduler import events
-
+from datetime import datetime
 
 def generate_ret(status, data=None, to_str=True, extra=None):
     ret = {
@@ -60,3 +60,19 @@ def event_handle(e):
 
 scheduler.add_listener(event_handle, mask=(events.EVENT_JOB_ERROR | events.EVENT_JOB_MISSED | events.EVENT_JOB_MAX_INSTANCES))
 
+
+class MyLog(db.Model):
+    __tablename__ = 'mylog'
+    id = db.Column(db.Integer, primary_key=True)
+    app_name = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    createTime = db.Column(db.DateTime, default=datetime.now)
+
+    def __repr__(self):
+        return '<log APP:%r>' % self.app_name
+
+
+def my_log(name, content):
+    tmp_log = MyLog(app_name=name, content=content)
+    db.session.add(tmp_log)
+    db.session.commit()

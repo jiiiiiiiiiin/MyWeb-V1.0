@@ -9,17 +9,17 @@
 
 
 {% block nav %}
-{#    <div class="layui-side layui-bg-black side-nav">#}
-{#        <ul class="layui-nav layui-nav-tree layui-nav-side side-nav" lay-filter="nav-user" lay-shrink="all">#}
-{#            <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->#}
-{##}
-{#            {% if user_info.authority == user_attribute.root %}#}
-{#                <li class="layui-nav-item layui-nav-itemed">#}
-{#                    <a>系统设置</a>#}
-{#                </li>#}
-{#            {% endif %}#}
-{#        </ul>#}
-{#    </div>#}
+    {#    <div class="layui-side layui-bg-black side-nav">#}
+    {#        <ul class="layui-nav layui-nav-tree layui-nav-side side-nav" lay-filter="nav-user" lay-shrink="all">#}
+    {#            <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->#}
+    {##}
+    {#            {% if user_info.authority == user_attribute.root %}#}
+    {#                <li class="layui-nav-item layui-nav-itemed">#}
+    {#                    <a>系统设置</a>#}
+    {#                </li>#}
+    {#            {% endif %}#}
+    {#        </ul>#}
+    {#    </div>#}
 {% endblock %}
 
 {% block body %}
@@ -54,7 +54,11 @@
                             {% if user_info.authority <= app.app_authority %}
                                 <blockquote class="layui-elem-quote">
                                     {{ app.app_name }}
-                                    <a href="{{ url_for("app." + app.app_id) }}" class="layui-btn">跳转</a>
+                                    {% if app.app_status == "1" %}
+                                        <a href="{{ url_for("app." + app.app_id) }}" class="layui-btn">跳转</a>
+                                    {% else %}
+                                        -App维护中...
+                                    {% endif %}
                                 </blockquote>
                             {% endif %}
                         {% endfor %}

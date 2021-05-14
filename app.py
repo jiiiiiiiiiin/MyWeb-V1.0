@@ -56,7 +56,8 @@ with app.app_context():
 if os.environ.get('WERKZEUG_RUN_MAIN') == 'true' or os.path.exists("server.env"):  # 解决FLASK DEBUG模式定时任务执行两次
     # scheduler.init_app(app)
     # scheduler.start()
-    bark_root("apscheduler start ok.")
+    # ("apscheduler start ok.")
+    pass
 
 if __name__ == '__main__':
     logging.basicConfig(filename='flask.log', level=logging.DEBUG)

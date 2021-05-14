@@ -1,8 +1,10 @@
 from blue_app import app_list, app_scheduler_func, AppAttribute, app_blue
+from blue_app.app_cpdaily import ignore
 from exts import UserAttribute, db, generate_ret
 from models import Apps
 from datetime import datetime
-from flask import request, session
+from flask import request, session, render_template
+
 
 this_app = Apps(app_name="CpDaily",
                 app_url="/cpdaily",
@@ -46,6 +48,15 @@ class Cpdaily(db.Model):
         return '<cpdaily %r>' % self.username
 
 
+@app_blue.route(this_app.app_url, endpoint=this_app.app_id)
+def cpdaily():
+    if session.get("user_status"):
+        user_id = session.get("user_info").get("userid")
+        q = Cpdaily.query.filter(Cpdaily.user_id == user_id).first()
+        return render_template("App/cpdaily/cpdaily.html", user=q)
+    return "error"
+
+
 @app_blue.route(this_app.app_url + '/commit', endpoint=this_app.app_id + '_commit', methods=['POST'])
 def commit():
     if session.get("user_status"):
@@ -63,10 +74,17 @@ def commit():
                 return generate_ret(1, {'title': '通知', 'content': '密码修改成功。'})
             else:
                 # 这里需要判断一下密码是不是正确
-                q = Cpdaily(user_id=user_id, username=username, password=password)
-                db.session.add(q)
-                db.session.commit()
-                return generate_ret(1, {'title': '通知', 'content': '设置成功。'})
+                user = ignore.CpDaily({
+                    "username": username,
+                    "password": password
+                })
+                if user.handler(test=True):
+                    q = Cpdaily(user_id=user_id, username=username, password=password)
+                    db.session.add(q)
+                    db.session.commit()
+                    return generate_ret(1, {'title': '通知', 'content': '设置成功。'})
+                else:
+                    return generate_ret(0, {'title': '通知', 'content': '错误。'})
     return generate_ret(0, {'title': '通知', 'content': '失败'})
 
 

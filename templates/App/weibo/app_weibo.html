@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}weibo{% endblock %}
+{% block head %}
+
+{% endblock %}
+{% block body %}
+    <div class="side-body" style="background-color: #f2f2f2">
+        <div class="layui-row layui-col-space20">
+            {% if history %}
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">历史记录</div>
+                        <div class="layui-card-body" style="text-align: center;">
+                            {% for info in history %}
+                                <p><a href="{{ url_for("app.weibo") }}?uid={{ info.uid }}"
+                                      class="layui-bg-blue">{{ info.uid }}</a></p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if data %}
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">用户信息</div>
+                        <div class="layui-card-body" style="text-align: center;">
+                            <p>昵称：{{ data.userinfo.username }}</p>
+                            <p>签名：{{ data.userinfo.description }}</p>
+                            <img src="{{ data.userinfo.image }}" alt="">
+                        </div>
+                    </div>
+                </div>
+                {% for weibo in data.weibos %}
+                    <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header">微博信息</div>
+                            <div class="layui-card-body" style="text-align: center;">
+                                <p><a href="{{ weibo.url }}" class="layui-bg-blue">微博链接</a></p>
+                                <p>时间：{{ weibo.time }}</p>
+                                <p>内容：{{ weibo.content  | safe }}</p>
+                                <p>图片：{{ weibo.image | length }}张</p>
+                                {% for img_url in weibo.image %}
+                                    <a href="{{ img_url }}" class="layui-bg-blue">IMG</a>
+                                {% endfor %}
+
+                                <p>手机：{{ weibo.phone }}</p>
+                                <p>转发：{{ weibo.reposts }}</p>
+                                <p>评论：{{ weibo.comments }}</p>
+                                <p>点赞：{{ weibo.attitudes }}</p>
+                                <p>id：{{ weibo.id }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+    </script>
+{% endblock %}
