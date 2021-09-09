@@ -65,8 +65,8 @@ def copy_recommend_playlist(config, my_log, login_test=False):
 
 if __name__ == '__main__':
     class Config:
-        phone = "18752843353"
-        password = "CWcw1157"
+        phone = ""
+        password = ""
         debug = True
     copy_recommend_playlist(config=Config)
     pass
